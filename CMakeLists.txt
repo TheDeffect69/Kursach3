@@ -9,7 +9,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Widgets Network Sql REQUIRED)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Sql)
 
 add_executable(QtChatApp
     main.cpp
@@ -19,4 +20,4 @@ add_executable(QtChatApp
     DatabaseLogger.h
 )
 
-target_link_libraries(QtChatApp PRIVATE Qt5::Widgets Qt5::Network Qt5::Sql)
+target_link_libraries(QtChatApp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Sql)
