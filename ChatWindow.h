@@ -17,7 +17,7 @@ class ChatWindow : public QWidget {
     Q_OBJECT
 
 public:
-    ChatWindow(DatabaseLogger* logger, QWidget *parent = nullptr);
+    ChatWindow(QWidget *parent = nullptr);
     ~ChatWindow();
 
 private slots:
@@ -48,6 +48,8 @@ private:
 
     QSpinBox* listenPortInput;
     QPushButton* listenButton;
+
+    QLineEdit* dbNameInput;
 };
 
 #endif // CHATWINDOW_H

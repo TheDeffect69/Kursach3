@@ -12,7 +12,7 @@ set(CMAKE_AUTORCC ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Sql)
 
-add_executable(QtChatApp
+add_executable(QtChatApp WIN32
     main.cpp
     ChatWindow.cpp
     ChatWindow.h
