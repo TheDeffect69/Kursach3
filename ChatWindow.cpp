@@ -2,8 +2,12 @@
 #include <QHostAddress>
 #include <QMessageBox>
 
-ChatWindow::ChatWindow(QWidget *parent)
-    : QWidget(parent), dbLogger(nullptr), tcpServer(new QTcpServer(this)), tcpSocket(nullptr) {
+ChatWindow::ChatWindow(const QString& dbType, const QString& dbHost, int dbPort,
+                       const QString& dbName, const QString& dbUser, const QString& dbPass,
+                       QWidget *parent)
+    : QWidget(parent), dbLogger(nullptr), tcpServer(new QTcpServer(this)), tcpSocket(nullptr),
+      m_dbType(dbType), m_dbHost(dbHost), m_dbPort(dbPort), m_dbName(dbName),
+      m_dbUser(dbUser), m_dbPass(dbPass) {
 
     setupUI();
 
@@ -20,7 +24,7 @@ void ChatWindow::setupUI() {
     // Database setup layout
     QHBoxLayout* dbLayout = new QHBoxLayout();
     dbLayout->addWidget(new QLabel("Файл базы данных:"));
-    dbNameInput = new QLineEdit("chat_db.sqlite");
+    dbNameInput = new QLineEdit(m_dbName);
     dbLayout->addWidget(dbNameInput);
     mainLayout->addLayout(dbLayout);
 
@@ -73,7 +77,7 @@ void ChatWindow::setupUI() {
 
 void ChatWindow::startServer() {
     if (!dbLogger) {
-        dbLogger = new DatabaseLogger("QSQLITE", "", -1, dbNameInput->text(), "", "");
+        dbLogger = new DatabaseLogger(m_dbType, m_dbHost, m_dbPort, dbNameInput->text(), m_dbUser, m_dbPass);
         dbNameInput->setEnabled(false);
     }
 
@@ -89,7 +93,7 @@ void ChatWindow::startServer() {
 
 void ChatWindow::connectToPeer() {
     if (!dbLogger) {
-        dbLogger = new DatabaseLogger("QSQLITE", "", -1, dbNameInput->text(), "", "");
+        dbLogger = new DatabaseLogger(m_dbType, m_dbHost, m_dbPort, dbNameInput->text(), m_dbUser, m_dbPass);
         dbNameInput->setEnabled(false);
     }
 
